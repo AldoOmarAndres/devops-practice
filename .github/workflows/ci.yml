@@ -24,7 +24,7 @@ jobs:
           node-version: '18' # O la versión de Node que uses
 
       - name: Llegar al backend
-        run: cd .\backend\
+        run: cd backend
 
       - name: Instalar dependencias
         run: npm install
