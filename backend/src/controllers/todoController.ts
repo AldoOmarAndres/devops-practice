@@ -12,7 +12,7 @@ export const pool = new pg.Pool({
 export const getTasks = async (req:Request, res:Response) => {
     try {
         const result = await pool.query('SELECT * FROM tasks ORDER BY id ASC');
-        res.json(result.rows);
+        res.status(200).json(result.rows);
     } catch (error) {
         return res.status(500).json({ message: error });
     }
@@ -20,13 +20,15 @@ export const getTasks = async (req:Request, res:Response) => {
 
 export const createTask = async (req:Request, res:Response) => {
     const { description } = req.body;
+    console.log(description)
     try {
         const result = await pool.query(
             'INSERT INTO tasks (description) VALUES ($1) RETURNING *',
             [description]
         );
-        res.json(result.rows[0]);
+        res.status(201).json(result.rows[0]);
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: error });
     }
 };
@@ -41,6 +43,17 @@ export const updateTaskStatus = async (req:Request, res:Response) => {
         );
         res.json(result.rows[0]);
     } catch (error) {
+        return res.status(500).json({ message: error });
+    }
+};
+
+export const testear = async (req:Request, res:Response) => {
+    const { num1, num2 } = req.body;
+    try {
+        const result = num1 + num2;
+        res.status(201).json(result);
+    } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: error });
     }
 };

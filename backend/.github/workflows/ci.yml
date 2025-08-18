@@ -1,0 +1,30 @@
+name: CI de Tareas ToDo
+
+on:
+  push:
+    branches:
+      - main
+      - dev # Por ahora no la uso
+  pull_request:
+    branches:
+      - main
+      - dev # Por ahora no la uso
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v2
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18' # O la versión de Node que uses
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar los tests
+        run: npm run test
