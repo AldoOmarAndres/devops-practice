@@ -7,7 +7,7 @@
     "build": "tsc",
     "dev": "ts-node-dev src/app",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest --runInBand --force-exit"
   },
   "dependencies": {
     "cors": "^2.8.5",

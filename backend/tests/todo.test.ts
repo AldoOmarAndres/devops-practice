@@ -20,11 +20,6 @@ describe('API de Tareas ToDo', () => {
     // 3. Verificar la respuesta de la creación
     expect(postResponse.statusCode).toBe(201); // El código de estado HTTP 201 significa "Creado"
     expect(postResponse.body).toBe(4);
-
-    // 4. Enviar una solicitud GET para obtener todas las tareas y verificar que la nueva tarea está en la lista
-    const getResponse = await request(app).get('/api/tasks');
-
-    // 5. Verificar la respuesta de la obtención de tareas
     
   });
 
