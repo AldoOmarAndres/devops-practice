@@ -1,0 +1,8 @@
+# dependencies and outputs
+node_modules/
+dist/
+
+.vscode/
+
+# env files
+.env
