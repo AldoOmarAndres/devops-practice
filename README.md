@@ -1,6 +1,6 @@
 # Todo Application
 
-This is a simple Todo application built with a React frontend, an Express.js backend, and a PostgreSQL database. The application allows users to create, read and update tasks items.
+This is a simple Todo application built with a React frontend, an Express.js backend, and a PostgreSQL database (not implemented yet). The application allows users to create, read and update tasks items.
 
 ## Project Structure
 
@@ -21,8 +21,6 @@ devops-practice
 │   │   └── App.js                   # Main component of the React application
 │   ├── package.json                 # NPM configuration for frontend
 │   └── Dockerfile                   # Dockerfile for frontend
-├── database          # Database setup
-│   └── init.sql                     # SQL commands to initialize the database
 ├── docker-compose.yml                # Docker Compose configuration
 └── README.md                        # Project documentation
 ```

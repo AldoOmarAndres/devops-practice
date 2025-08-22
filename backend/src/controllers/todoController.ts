@@ -1,27 +1,26 @@
 import { Request, Response } from 'express';
 import pg from 'pg';
 
-export const pool = new pg.Pool({
+/* const pool = new pg.Pool({
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || 'postgres',
     host: process.env.DB_HOST || 'database',
     port: Number(process.env.DB_PORT) || 5432,
     database: process.env.DB_NAME || 'tododb',
-});
+}); */
 
 export const getTasks = async (req:Request, res:Response) => {
-    try {
+    /* try {
         const result = await pool.query('SELECT * FROM tasks ORDER BY id ASC');
         res.status(200).json(result.rows);
     } catch (error) {
         return res.status(500).json({ message: error });
-    }
+    } */
 };
 
 export const createTask = async (req:Request, res:Response) => {
     const { description } = req.body;
-    console.log(description)
-    try {
+    /* try {
         const result = await pool.query(
             'INSERT INTO tasks (description) VALUES ($1) RETURNING *',
             [description]
@@ -30,11 +29,11 @@ export const createTask = async (req:Request, res:Response) => {
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: error });
-    }
+    } */
 };
 
 export const updateTaskStatus = async (req:Request, res:Response) => {
-    const { id } = req.params;
+    /* const { id } = req.params;
     const { status } = req.body;
     try {
         const result = await pool.query(
@@ -44,14 +43,14 @@ export const updateTaskStatus = async (req:Request, res:Response) => {
         res.json(result.rows[0]);
     } catch (error) {
         return res.status(500).json({ message: error });
-    }
+    } */
 };
 
 export const testear = async (req:Request, res:Response) => {
     const { num1, num2 } = req.body;
     try {
         const result = num1 + num2;
-        res.status(201).json(result);
+        res.status(200).json(result);
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: error });
