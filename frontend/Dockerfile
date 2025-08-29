@@ -1,4 +1,4 @@
-# Etapa 1: Build
+# Buildear
 FROM node:18-alpine as builder
 
 WORKDIR /app
@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Etapa 2: Servir
+# Levantar
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 EXPOSE 80

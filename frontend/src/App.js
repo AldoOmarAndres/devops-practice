@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = proccess.env.API ?? 'http://localhost:4000/api';
+const API_URL = process.env.REACT_APP_API ?? 'http://localhost:4000/api';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -19,7 +19,7 @@ function App() {
   const handleCreateTask = async (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
-    const res = await axios.post(`${API_URL}/tasks`, { description: newTask });
+    const res = await axios.post(`${API_URL}/tasks`, { title: newTask });
     setTasks([...tasks, res.data]);
     setNewTask('');
   };
@@ -38,9 +38,9 @@ function App() {
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            placeholder="Nueva tarea..."
+            placeholder="New task..."
           />
-          <button type="submit">Agregar</button>
+          <button type="submit">Add new task</button>
         </form>
         <div className="task-container">
           {tasks.map(task => (
@@ -50,9 +50,8 @@ function App() {
                 value={task.status}
                 onChange={(e) => handleStatusChange(task.id, e.target.value)}
               >
-                <option value="pendiente">Pendiente</option>
-                <option value="en_proceso">En Proceso</option>
-                <option value="realizada">Realizada</option>
+                <option value="pendiente">Pending</option>
+                <option value="completada">Completed</option>
               </select>
             </div>
           ))}
