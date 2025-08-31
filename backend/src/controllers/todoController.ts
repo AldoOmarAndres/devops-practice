@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Redis from "ioredis";
 
 let client: Redis;
-if (process.env.LOCAL || false) {
+if (process.env.LOCAL) {
   client = new Redis({
     host: process.env.REDIS_HOST || "localhost",
     port: Number(process.env.REDIS_PORT) || 6379,
