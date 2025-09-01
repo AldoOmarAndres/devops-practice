@@ -2,6 +2,8 @@
 
 This is a simple Todo application built with a React frontend, an Express.js backend, and a PostgreSQL database (not implemented yet). The application allows users to create, read and update tasks items.
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/28058df562244e0db8beceaa1a88d0bf)](https://app.codacy.com/gh/AldoOmarAndres/devops-practice/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 ## Project Structure
 
 ```
