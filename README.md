@@ -1,5 +1,7 @@
 # Todo Application
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b2acbcbe95ec4b8eb0fc7d156c305ece)](https://app.codacy.com/gh/AldoOmarAndres/devops-practice?utm_source=github.com&utm_medium=referral&utm_content=AldoOmarAndres/devops-practice&utm_campaign=Badge_Grade)
+
 This is a simple Todo application built with a React frontend, an Express.js backend, and a PostgreSQL database (not implemented yet). The application allows users to create, read and update tasks items.
 
 ## Project Structure
