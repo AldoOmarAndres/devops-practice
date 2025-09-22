@@ -1,10 +1,25 @@
-# Todo Application
+# 🧩 DevOps: Trabajo Práctico 1
 
-This is a simple Todo application built with a React frontend, an Express.js backend, and a PostgreSQL database (not implemented yet). The application allows users to create, read and update tasks items.
+Bienvenido al repositorio del trabajo práctico 1 del cursado 2025 de DevOps, realizado por:
+
+Autores:
+
+- Aldo Omar Andres.
+- Agustín Nicolás Bravo Pérez.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/28058df562244e0db8beceaa1a88d0bf)](https://app.codacy.com/gh/AldoOmarAndres/devops-practice/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-## Project Structure
+## 📃 Aplicación: Lista de Tareas
+
+Construimos una simple _todo application_ con los siguientes componentes:
+
+- Una app web desarrollada con React.
+- Un servidor desarrollado con TypeScript y Express.js.
+- Una base de datos Redis.
+
+La aplicación permite ver la lista de tareas, crear tareas nuevas y actualizar o eliminar tareas existentes.
+
+## 📂 Estructura del Proyecto
 
 ```
 devops-practice
@@ -27,28 +42,39 @@ devops-practice
 └── README.md                        # Project documentation
 ```
 
-## Getting Started
+## 🧑‍💻 Primeros Pasos
 
-### Prerequisites
+Requerimientos para levantar el proyecto:
 
-- Docker
-- Docker Compose
+- Docker.
 
-### Setup
+1. Clonar el repositorio:
 
-1. Clone the repository:
    ```
-   git clone <repository-url>
+   git clone https://github.com/AldoOmarAndres/devops-practice.git
    cd devops-practice
    ```
 
-2. Build and run the application using Docker Compose:
+2. Construir y ejecutar la aplicación usando Docker Compose:
+
    ```
-   docker-compose up --build
+   docker compose up --build
    ```
 
-3. Access the frontend application at `http://localhost:3000` and the backend API at `http://localhost:4000`.
+3. Visitar la UI en `http://localhost:3000` y la API en `http://localhost:3001`.
 
-### Usage
+## 🚀 Despliegue
 
-- You can create new todo items, view the list of todos, and update existing items through the frontend interface.
+// TODO
+
+## ⚒️ Tareas Pendientes
+
+Esta lista NO es exhaustiva!
+
+- [ ] Migrar el frontend a Vite ([Create React App](https://github.com/facebook/create-react-app) está deprecado).
+- [ ] Hacer un monorepo con una herramienta que no sea Turborepo (para conocer una nueva).
+- [ ] Agregar un paso de lint a la pipeline de CI.
+- [ ] Publicar los contenedores en un Package Registry.
+- [ ] Documentar la arquitectura con un diagrama.
+- [ ] Opcional: mejorar la UX de la app.
+- [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.

@@ -7,7 +7,6 @@ if (process.env.LOCAL == "true") {
   client = new Redis({
     host: process.env.REDIS_HOST || "localhost",
     port: Number(process.env.REDIS_PORT) || 6379,
-    
   });
 } else {
   client = new Redis(process.env.REDIS_URL + "");

@@ -2,17 +2,14 @@ services:
   backend:
     build: ./backend
     ports:
-      - "4000:4000"
+      - "3001:3001"
     environment:
-      - REDIS_HOST=redis-db
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
       - LOCAL=true
-    
+
     depends_on:
-      - redis-db 
-    volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
+      - redis
 
   frontend:
     build: ./frontend
@@ -21,7 +18,7 @@ services:
     depends_on:
       - backend
 
-  redis-db:
+  redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"

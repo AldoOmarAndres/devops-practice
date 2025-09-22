@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import "./App.css";
 
-const API_URL = process.env.REACT_APP_API ?? 'http://localhost:4000/api';
+const API_URL = process.env.REACT_APP_API ?? "http://localhost:3001/api";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -21,12 +21,12 @@ function App() {
     if (!newTask.trim()) return;
     const res = await axios.post(`${API_URL}/tasks`, { title: newTask });
     setTasks([...tasks, res.data.task]);
-    setNewTask('');
+    setNewTask("");
   };
 
   const handleStatusChange = async (id, status) => {
     const res = await axios.put(`${API_URL}/tasks/${id}`, { status });
-    setTasks(tasks.map(task => (task.id === id ? res.data.task : task)));
+    setTasks(tasks.map((task) => (task.id === id ? res.data.task : task)));
   };
 
   return (
@@ -43,7 +43,7 @@ function App() {
           <button type="submit">Add new task</button>
         </form>
         <div className="task-container">
-          {tasks.map(task => (
+          {tasks.map((task) => (
             <div key={task.id} className={`task-card ${task.status}`}>
               <p>{task.title}</p>
               <select

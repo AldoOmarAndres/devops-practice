@@ -1,4 +1,4 @@
-# Buildear
+# Buildear la app web
 FROM node:18-alpine as builder
 
 WORKDIR /app
@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Levantar
+# Levantar el servidor web
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 EXPOSE 80
