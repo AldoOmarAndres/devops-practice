@@ -10,9 +10,12 @@ app.use(express.json());
 
 app.use("/api", taskRoutes);
 
-const PORT = Number(process.env.PORT) || 3001;
-app.listen(PORT, () => {
-  console.log("Server is listening on port", PORT);
-});
+// Only start the server if this file is run directly
+if (process.argv[1] && process.argv[1].endsWith("app.ts")) {
+  const PORT = Number(process.env.PORT) || 3001;
+  app.listen(PORT, () => {
+    console.log("Server is listening on port", PORT);
+  });
+}
 
 export default app;

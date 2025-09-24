@@ -73,7 +73,7 @@ Requerimientos para levantar el proyecto:
 Esta lista NO es exhaustiva!
 
 - [x] Migrar el frontend a Vite ([Create React App](https://github.com/facebook/create-react-app) está deprecado).
-- [ ] Agregar un paso de lint a la pipeline de CI.
+- [x] Agregar un paso de lint a la pipeline de CI.
 - [ ] Construir contenedores y publicarlos en un Package Registry.
 - [ ] Documentar la arquitectura con un diagrama.
 - [ ] Agregar la funcionalidad de eliminar tareas.
