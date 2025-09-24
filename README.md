@@ -77,6 +77,7 @@ Esta lista NO es exhaustiva!
 - [ ] Construir contenedores y publicarlos en un Package Registry.
 - [ ] Documentar la arquitectura con un diagrama.
 - [ ] Agregar la funcionalidad de eliminar tareas.
+- [ ] Agregar tests al frontend.
 - [ ] Opcional: agregar una UI de Redis.
 - [ ] Opcional: hacer un monorepo con Nx (para probar una alternativa a Turborepo).
 - [ ] Opcional: mejorar la UX de la app.

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   test:
@@ -15,13 +16,25 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20"
 
       - name: Install dependencies for backend
         working-directory: ./backend
         run: npm install
 
-      - name: Run tests for frontend
+      - name: Install dependencies for frontend
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Lint backend
+        working-directory: ./backend
+        run: npm run lint
+
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint
+
+      - name: Run tests on backend
         working-directory: ./backend
         run: npm run test
 
@@ -34,11 +47,9 @@ jobs:
       - name: Deploy Backend
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
-        run: |
-          curl "$deploy_url"
+        run: curl "$deploy_url"
 
       - name: Deploy Frontend
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}
-        run: |
-          curl "$deploy_url"
+        run: curl "$deploy_url"
