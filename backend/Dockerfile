@@ -9,8 +9,12 @@ COPY tsconfig.json ./
 
 RUN npm install
 
+ENV REDIS_HOST=redis
+ENV REDIS_PORT=6379
+ENV PORT=80
+
 RUN npm run build
 
-EXPOSE 3001
-
 CMD ["npm", "start"]
+
+EXPOSE 80

@@ -80,7 +80,7 @@ Se creó un proyecto `devops-practice`.
 
 Con los siguientes comandos interactivos se crean tres servicios `frontend`, `backend` y `redis`:
 
-```
+```bash
 railway login
 railway link
 
@@ -88,18 +88,25 @@ railway add -s backend \
    -i agustinbravop/devops-practice-backend:latest \
    -v "REDIS_HOST=redis" \
    -v "REDIS_PORT=6379" \
-   -v "PORT=3001" \
+   -v "PORT=80" \
    -v "NODE_ENV=production"
+```
 
+Es necesario ir manualmente al servicio `backend` y generar una URL para habilitarlo al público.
+Esa URL luego se pone como valor en la variable `VITE_API_URL` agregando un `/api` al final:
+
+```bash
 railway add -s frontend \
    -i agustinbravop/devops-practice-frontend:latest \
-   -v "VITE_API_URL=https://backend-production.up.railway.app/api"
+   -v "VITE_API_URL=backend-production-ced8.up.railway.app/api"
 
 railway add -s redis \
    -i redis:7-alpine
 ```
 
-Estas variables se guardan como GitHub Action Secrets para utilizarse en la GitHub Action.
+Luego se necesita manualmente habilitar al público el servicio `frontend`.
+
+Se tiene una GitHub Action para el despliegue.
 Pasos:
 
 1. GitHub Actions ejecuta todos los pasos de integración continua.
@@ -122,8 +129,9 @@ Esta lista NO es exhaustiva!
 - [x] Construir contenedores y publicarlos en un Package Registry.
 - [x] Agregar la funcionalidad de eliminar tareas.
 - [ ] Agregar tests al frontend.
-- [ ] Opcional: agregar una UI de Redis.
+- [x] Opcional: agregar una UI de Redis.
 - [ ] Opcional: hacer un monorepo con Nx (para probar una alternativa a Turborepo).
 - [ ] Opcional: mejorar la UX de la app.
+- [ ] Opcional: probar configurar Railway para que el despliegue sea automático.
 - [ ] Documentar la arquitectura con un diagrama.
 - [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.
