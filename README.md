@@ -1,6 +1,6 @@
 # 🧩 DevOps: Trabajo Práctico 1
 
-Bienvenido al repositorio del trabajo práctico 1 del cursado 2025 de DevOps, realizado por:
+Bienvenido al repositorio del [trabajo práctico 1](https://docs.google.com/document/d/1t88Qv7iCp90YzHOi2W8MfY7bfFoTcjVz1UkCZPzs84c/edit?tab=t.0) del cursado 2025 de DevOps, realizado por:
 
 - Aldo Omar Andres.
 - Agustín Nicolás Bravo Pérez.
@@ -19,7 +19,7 @@ La aplicación permite ver la lista de tareas, crear tareas nuevas y actualizar 
 
 ## 📂 Estructura del Proyecto
 
-```
+```yaml
 devops-practice
 ├── backend          # Backend application using Express.js
 │   ├── src
@@ -64,9 +64,51 @@ Requerimientos para levantar el proyecto:
 
 3. Visitar la UI en `http://localhost:3000` y la API en `http://localhost:3001`.
 
+Se pueden definir las siguientes variables de entorno:
+
+- `frontend/.env`:
+
+  ```
+  VITE_API_URL
+  ```
+
+- `backend/.env`:
+  ```
+  REDIS_HOST
+  REDIS_PORT
+  ```
+
 ## 🚀 Despliegue
 
-// TODO...
+Se utiliza [Railway](https://railway.com) para desplegar la aplicación.
+Se creó un proyecto `devops-practice`.
+
+Con el siguiente comando se crean tres servicios `frontend`, `backend` y `redis`.
+
+```
+railway login
+railway link
+
+railway add -s backend \
+   -i agustinbravop/devops-practice-backend:latest \
+   -v "REDIS_HOST=redis" \
+   -v "REDIS_PORT=6379" \
+   -v "NODE_ENV=production"
+
+railway add -s frontend \
+   -i agustinbravop/devops-practice-frontend:latest \
+   -v "VITE_API_URL=https://backend-production.up.railway.app/api"
+
+railway add -s redis \
+   -i redis:7-alpine
+```
+
+Estas variables se guardan como GitHub Action Secrets para utilizarse en la GitHub Action.
+Pasos:
+
+1. GitHub Actions ejecuta todos los pasos de integración continua.
+2. GitHub Actions construye las imagenes de contenedores y las publica en Docker Hub.
+3. Railway detecta una nueva imagen con la etiqueta `latest` en Docker Hub y redespliega los servicios.
 
 ## ⚒️ Tareas Pendientes
 
@@ -74,11 +116,11 @@ Esta lista NO es exhaustiva!
 
 - [x] Migrar el frontend a Vite ([Create React App](https://github.com/facebook/create-react-app) está deprecado).
 - [x] Agregar un paso de lint a la pipeline de CI.
-- [ ] Construir contenedores y publicarlos en un Package Registry.
-- [ ] Documentar la arquitectura con un diagrama.
+- [x] Construir contenedores y publicarlos en un Package Registry.
 - [ ] Agregar la funcionalidad de eliminar tareas.
 - [ ] Agregar tests al frontend.
 - [ ] Opcional: agregar una UI de Redis.
 - [ ] Opcional: hacer un monorepo con Nx (para probar una alternativa a Turborepo).
 - [ ] Opcional: mejorar la UX de la app.
+- [ ] Documentar la arquitectura con un diagrama.
 - [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.
