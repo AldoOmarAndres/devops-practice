@@ -91,7 +91,7 @@ railway add -s backend \
 ```
 
 Es necesario ir manualmente al servicio `backend` y generar una URL para habilitarlo al público.
-Esa URL luego se pone en el paso `build-frontend` de la GitHub Action como el argumento `VITE_API_URL` agregando un `/api` al final.
+Esa URL `https://backend-production-ced8.up.railway.app` luego se pone en el paso `build-frontend` de la GitHub Action como el argumento `VITE_API_URL` agregando un `/api` al final.
 Esto es necesario porque Vite compila la aplicación al momento de construir la imagen y no procesa variables de entorno en tiempo de ejecución.
 
 ```bash
