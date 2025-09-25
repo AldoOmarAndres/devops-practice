@@ -69,9 +69,8 @@ Se pueden definir las siguientes variables de entorno:
 - `backend/.env`:
 
   ```
-  REDIS_HOST=redis
-  REDIS_PORT=6379
-  PORT=3001
+  REDIS_URL=redis://localhost:6379
+  PORT=80
   ```
 
 ## 🚀 Despliegue
@@ -87,25 +86,28 @@ railway link
 
 railway add -s backend \
    -i agustinbravop/devops-practice-backend:latest \
-   -v "REDIS_HOST=redis" \
-   -v "REDIS_PORT=6379" \
-   -v "PORT=80" \
-   -v "NODE_ENV=production"
+   -v "REDIS_URL=redis://redis:6379?family=6" \
+   -v "PORT=80"
 ```
 
 Es necesario ir manualmente al servicio `backend` y generar una URL para habilitarlo al público.
-Esa URL luego se pone como valor en la variable `VITE_API_URL` agregando un `/api` al final:
+Esa URL luego se pone en el paso `build-frontend` de la GitHub Action como el argumento `VITE_API_URL` agregando un `/api` al final.
+Esto es necesario porque Vite compila la aplicación al momento de construir la imagen y no procesa variables de entorno en tiempo de ejecución.
 
 ```bash
 railway add -s frontend \
-   -i agustinbravop/devops-practice-frontend:latest \
-   -v "VITE_API_URL=backend-production-ced8.up.railway.app/api"
+   -i agustinbravop/devops-practice-frontend:latest
 
 railway add -s redis \
-   -i redis:7-alpine
+   -i redis:7-alpine \
+   -v "REDISHOST=redis" \
+   -v "REDISPORT=6379" \
+   -v "REDISUSER=default" \
+   -v "REDISPASSWORD=" \
 ```
 
 Luego se necesita manualmente habilitar al público el servicio `frontend`.
+En `redis` es necesario habilitar un TCP Proxy con el puerto `6379`.
 
 También es necesario en ambos servicios habilitar los redespliegues automáticos cuando se actualiza la imagen con etiqueta `latest`.
 Esto no resultó simple de automatizar, demostrando un inconveniente de Railway: prioriza la experiencia de la GUI por sobre la CLI.

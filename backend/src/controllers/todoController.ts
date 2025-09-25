@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import Redis from "ioredis";
 
-let client = new Redis({
-  host: process.env.REDIS_HOST || "localhost",
-  port: Number(process.env.REDIS_PORT) || 6379,
-});
+let client = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 
 export const getTasks = async (_req: Request, res: Response) => {
   const redisClient = client;

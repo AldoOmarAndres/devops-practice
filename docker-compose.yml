@@ -1,21 +1,20 @@
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:3001/api
     ports:
       - "3000:80"
-    environment:
-      - VITE_API_URL=http://localhost:3001/api
     depends_on:
       - backend
 
   backend:
     build: ./backend
     ports:
-      - "3001:3001"
+      - "3001:80"
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - LOCAL=true
+      REDIS_URL: redis://redis:6379
     depends_on:
       - redis
 
@@ -35,10 +34,11 @@ services:
     volumes:
       - redisinsight_data:/data
     environment:
-      - RI_REDIS_HOST_LOCAL=redis
-      - RI_REDIS_PORT_LOCAL=6379
-      - RI_REDIS_HOST_PROD=redis
-      - RI_REDIS_PORT_PROD=6379
+      RI_REDIS_HOST_LOCAL: redis
+      RI_REDIS_PORT_LOCAL: 6379
+      # TODO: cambiar por la URL en Railway
+      RI_REDIS_HOST_PROD: redis
+      RI_REDIS_PORT_PROD: 6379
     depends_on:
       - redis
 
