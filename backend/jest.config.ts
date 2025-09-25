@@ -4,14 +4,8 @@ const config: Config = {
   preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["**/tests/**/*.test.ts"],
-  extensionsToTreatAsEsm: [".ts"],
   transform: {
-    "^.+\\.ts$": [
-      "ts-jest",
-      {
-        useESM: true,
-      },
-    ],
+    "^.+\\.ts$": "ts-jest",
   },
   testTimeout: 10000,
   // Detect open handles to help debug hanging tests

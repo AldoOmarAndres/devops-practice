@@ -29,6 +29,15 @@ function App() {
     setTasks(tasks.map((task) => (task.id === id ? res.data.task : task)));
   };
 
+  const handleDeleteTask = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/tasks/${id}`);
+      setTasks(tasks.filter((task) => task.id !== id));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -46,13 +55,22 @@ function App() {
           {tasks.map((task) => (
             <div key={task.id} className={`task-card ${task.status}`}>
               <p>{task.title}</p>
-              <select
-                value={task.status}
-                onChange={(e) => handleStatusChange(task.id, e.target.value)}
-              >
-                <option value="pendiente">Pending</option>
-                <option value="completada">Completed</option>
-              </select>
+              <div className="task-controls">
+                <select
+                  value={task.status}
+                  onChange={(e) => handleStatusChange(task.id, e.target.value)}
+                >
+                  <option value="pendiente">Pending</option>
+                  <option value="completada">Completed</option>
+                </select>
+                <button
+                  className="delete-button"
+                  onClick={() => handleDeleteTask(task.id)}
+                  title="Delete task"
+                >
+                  🗑️
+                </button>
+              </div>
             </div>
           ))}
         </div>

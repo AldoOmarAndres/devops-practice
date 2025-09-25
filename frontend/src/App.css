@@ -47,6 +47,12 @@ button {
   align-items: center;
 }
 
+.task-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .task-card.pendiente {
   border-left: 5px solid #f0ad4e;
 }
@@ -62,4 +68,19 @@ button {
 select {
   padding: 8px;
   border-radius: 5px;
+}
+
+.delete-button {
+  background-color: #dc3545 !important;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #c82333 !important;
 }

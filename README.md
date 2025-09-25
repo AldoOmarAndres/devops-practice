@@ -21,29 +21,23 @@ La aplicación permite ver la lista de tareas, crear tareas nuevas y actualizar 
 
 ```yaml
 devops-practice
-├── backend          # Backend application using Express.js
+├── .github          # Definición de la GitHub Action
+├── backend          # Servidor backend con TypeScript y Express.js
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── Dockerfile
+├── frontend         # App web frontend con React y Vite
 │   ├── src
-│   │   ├── app.ts                  # Entry point of the backend application
-│   │   ├── controllers
-│   │   │   └── todoController.ts   # Controller for handling todo operations
-│   │   └── routes
-│   │       └── todoRoutes.ts        # Routes for todo operations
-│   ├── package.json                 # NPM configuration for backend
-│   ├── tsconfig.json                # TypeScript configuration for backend
-│   └── Dockerfile                   # Dockerfile for backend
-├── frontend         # Frontend application using React and Vite
-│   ├── src
-│   │   ├── App.jsx                  # Main component of the React application
-│   │   └── index.jsx                # Entry point of the React application
-│   ├── index.html                   # HTML template for Vite
-│   ├── vite.config.js               # Vite configuration
-│   ├── package.json                 # NPM configuration for frontend
-│   └── Dockerfile                   # Dockerfile for frontend
-├── docker-compose.yml                # Docker Compose configuration
-└── README.md                        # Project documentation
+│   │   └── index.jsx
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── package.json
+│   └── Dockerfile
+├── docker-compose.yml
+└── README.md
 ```
 
-## 🧑‍💻 Primeros Pasos
+## 🧑‍💻 Desarrollo
 
 Requerimientos para levantar el proyecto:
 
@@ -69,13 +63,14 @@ Se pueden definir las siguientes variables de entorno:
 - `frontend/.env`:
 
   ```
-  VITE_API_URL
+  VITE_API_URL=http://localhost:3001/api
   ```
 
 - `backend/.env`:
   ```
-  REDIS_HOST
-  REDIS_PORT
+  REDIS_HOST=redis
+  REDIS_PORT=6379
+  PORT=3001
   ```
 
 ## 🚀 Despliegue
@@ -83,7 +78,7 @@ Se pueden definir las siguientes variables de entorno:
 Se utiliza [Railway](https://railway.com) para desplegar la aplicación.
 Se creó un proyecto `devops-practice`.
 
-Con el siguiente comando se crean tres servicios `frontend`, `backend` y `redis`.
+Con los siguientes comandos interactivos se crean tres servicios `frontend`, `backend` y `redis`:
 
 ```
 railway login
@@ -93,6 +88,7 @@ railway add -s backend \
    -i agustinbravop/devops-practice-backend:latest \
    -v "REDIS_HOST=redis" \
    -v "REDIS_PORT=6379" \
+   -v "PORT=3001" \
    -v "NODE_ENV=production"
 
 railway add -s frontend \
@@ -110,6 +106,13 @@ Pasos:
 2. GitHub Actions construye las imagenes de contenedores y las publica en Docker Hub.
 3. Railway detecta una nueva imagen con la etiqueta `latest` en Docker Hub y redespliega los servicios.
 
+Esta GitHub Action requiere las siguientes variables y secrets:
+
+```
+DOCKERHUB_USERNAME=
+DOCKERHUB_TOKEN=
+```
+
 ## ⚒️ Tareas Pendientes
 
 Esta lista NO es exhaustiva!
@@ -117,7 +120,7 @@ Esta lista NO es exhaustiva!
 - [x] Migrar el frontend a Vite ([Create React App](https://github.com/facebook/create-react-app) está deprecado).
 - [x] Agregar un paso de lint a la pipeline de CI.
 - [x] Construir contenedores y publicarlos en un Package Registry.
-- [ ] Agregar la funcionalidad de eliminar tareas.
+- [x] Agregar la funcionalidad de eliminar tareas.
 - [ ] Agregar tests al frontend.
 - [ ] Opcional: agregar una UI de Redis.
 - [ ] Opcional: hacer un monorepo con Nx (para probar una alternativa a Turborepo).

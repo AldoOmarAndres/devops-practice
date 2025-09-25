@@ -99,6 +99,30 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteTask = async (req: Request, res: Response) => {
+  const redisClient = client;
+  try {
+    const { id } = req.params;
+
+    const taskKey = `task:${id}`;
+
+    const taskExists = await redisClient.exists(taskKey);
+    if (taskExists === 0) {
+      return res.status(404).json({ message: "Tarea no encontrada." });
+    }
+
+    await redisClient.del(taskKey);
+
+    res.status(200).json({
+      message: "Tarea eliminada exitosamente.",
+      taskId: id,
+    });
+  } catch (error) {
+    console.error("Error al eliminar la tarea:", error);
+    res.status(500).json({ message: "Error interno del servidor.", error });
+  }
+};
+
 export const testear = async (req: Request, res: Response) => {
   const { num1, num2 } = req.body;
   try {
