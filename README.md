@@ -67,6 +67,7 @@ Se pueden definir las siguientes variables de entorno:
   ```
 
 - `backend/.env`:
+
   ```
   REDIS_HOST=redis
   REDIS_PORT=6379
@@ -106,6 +107,9 @@ railway add -s redis \
 
 Luego se necesita manualmente habilitar al público el servicio `frontend`.
 
+También es necesario en ambos servicios habilitar los redespliegues automáticos cuando se actualiza la imagen con etiqueta `latest`.
+Esto no resultó simple de automatizar, demostrando un inconveniente de Railway: prioriza la experiencia de la GUI por sobre la CLI.
+
 Se tiene una GitHub Action para el despliegue.
 Pasos:
 
@@ -130,7 +134,7 @@ Esta lista NO es exhaustiva!
 - [x] Agregar la funcionalidad de eliminar tareas.
 - [ ] Agregar tests al frontend.
 - [x] Opcional: agregar una UI de Redis.
-- [ ] Opcional: hacer un monorepo con Nx (para probar una alternativa a Turborepo).
+- [ ] Opcional: probar una herramienta de monorepos para ejecutar scripts (alguna alternativa a Turborepo).
 - [ ] Opcional: mejorar la UX de la app.
 - [ ] Opcional: probar configurar Railway para que el despliegue sea automático.
 - [ ] Documentar la arquitectura con un diagrama.
