@@ -90,7 +90,7 @@ describe("App Integration Tests", () => {
   });
 
   it("handles multiple tasks correctly", async () => {
-    const user = userEvent.setup();
+    userEvent.setup();
     const multipleTasks = [
       { id: 1, title: "Task 1", status: "pendiente" },
       { id: 2, title: "Task 2", status: "completada" },

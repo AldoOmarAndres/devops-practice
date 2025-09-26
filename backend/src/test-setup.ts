@@ -29,7 +29,7 @@ export const mockRedis = {
 
 // Mock the Redis constructor
 (Redis as jest.MockedClass<typeof Redis>).mockImplementation(
-  () => mockRedis as any,
+  () => mockRedis as unknown as Redis,
 );
 
 // Reset all mocks before each test

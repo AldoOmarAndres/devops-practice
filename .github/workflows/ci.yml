@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test-backend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,26 +18,43 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies
-        run: |
-          (cd backend && npm install) &
-          (cd frontend && npm install) &
-          wait
+      - name: Install backend dependencies
+        working-directory: backend
+        run: cd backend && npm install
 
-      - name: Lint
-        run: |
-          (cd backend && npm run lint) &
-          (cd frontend && npm run lint) &
-          wait
+      - name: Lint backend
+        working-directory: backend
+        run: npm run lint
 
-      - name: Test
-        run: |
-          (cd backend && npm run test) &
-          (cd frontend && npm run test) &
-          wait
+      - name: Test backend
+        working-directory: backend
+        run: npm run test
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Lint frontend
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Test frontend
+        working-directory: frontend
+        run: npm run test
 
   build-backend:
-    needs: test
+    needs: test-backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -72,7 +89,7 @@ jobs:
           labels: ${{ steps.meta-backend.outputs.labels }}
 
   build-frontend:
-    needs: test
+    needs: test-frontend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

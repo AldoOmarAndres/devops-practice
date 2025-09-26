@@ -57,29 +57,6 @@ function App() {
     }
   };
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "completada":
-        return "✅";
-      default:
-        return "⏳";
-    }
-  };
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "completada":
-        return <span className="task-badge badge-completed">✅ Completed</span>;
-      default:
-        return <span className="task-badge badge-pending">⏳ Pending</span>;
-    }
-  };
-
-  const completedTasks = tasks.filter(
-    (task) => task.status === "completada",
-  ).length;
-  const totalTasks = tasks.length;
-
   return (
     <div className="app">
       {/* Header */}

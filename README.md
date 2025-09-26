@@ -1,11 +1,19 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/28058df562244e0db8beceaa1a88d0bf)](https://app.codacy.com/gh/AldoOmarAndres/devops-practice/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 # 🧩 DevOps: Trabajo Práctico 1
 
-Bienvenido al repositorio del [trabajo práctico 1](https://docs.google.com/document/d/1t88Qv7iCp90YzHOi2W8MfY7bfFoTcjVz1UkCZPzs84c/edit?tab=t.0) del cursado 2025 de DevOps, realizado por:
+Bienvenido al repositorio del trabajo práctico 1 del cursado 2025 de DevOps, realizado por:
 
 - Aldo Omar Andres.
 - Agustín Nicolás Bravo Pérez.
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/28058df562244e0db8beceaa1a88d0bf)](https://app.codacy.com/gh/AldoOmarAndres/devops-practice/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+Links relevantes:
+
+- [Sitio web](https://frontend-production-842c.up.railway.app/).
+- [Railway](https://railway.com/project/8a1229ac-af24-48f2-b711-544234bb788b/service/1dc4995f-f778-4f16-9999-ef4b26b8d356/variables?environmentId=81679781-80b7-40e0-8b3d-4e992e4dbd8e).
+- [Repositorio](https://github.com/AldoOmarAndres/devops-practice).
+- [Presentación](https://docs.google.com/presentation/d/1Oeib-6iJBH1CDKIbkvpxfdh1EuLlGJWqte_1BYEEv3M/edit).
+- [Consigna](https://docs.google.com/document/d/1t88Qv7iCp90YzHOi2W8MfY7bfFoTcjVz1UkCZPzs84c/edit?tab=t.0).
 
 ## ✨ Aplicación: Lista de Tareas
 
@@ -57,14 +65,14 @@ Requisitos para levantar el proyecto:
 
 1. Clonar el repositorio:
 
-   ```
+   ```bash
    git clone https://github.com/AldoOmarAndres/devops-practice.git
    cd devops-practice
    ```
 
 2. Construir y ejecutar la aplicación usando Docker Compose:
 
-   ```
+   ```bash
    docker compose up --build
    ```
 
@@ -193,4 +201,4 @@ Esta lista NO es exhaustiva!
 - [x] Documentar la arquitectura con un diagrama.
 - [ ] Opcional: probar una herramienta de monorepos para ejecutar scripts (alguna alternativa a Turborepo).
 - [ ] Opcional: desplegar un Redis Insight en lugar de usar la UI integrada en Railway.
-- [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.
+- [x] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.

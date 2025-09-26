@@ -5,7 +5,13 @@ import tsparser from "@typescript-eslint/parser";
 
 export default [
   {
-    ignores: ["dist", "node_modules", "**/*.spec.ts", "**/*.test.ts"],
+    ignores: [
+      "dist",
+      "node_modules",
+      "**/*.spec.ts",
+      "**/*.test.ts",
+      "coverage/**",
+    ],
   },
   {
     files: ["**/*.ts"],
@@ -14,6 +20,7 @@ export default [
       globals: {
         ...globals.node,
         ...globals.es2020,
+        ...globals.jest,
       },
       parser: tsparser,
       parserOptions: {
