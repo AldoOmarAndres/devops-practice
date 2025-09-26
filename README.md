@@ -130,10 +130,10 @@ Esta lista NO es exhaustiva!
 - [x] Agregar un paso de lint a la pipeline de CI.
 - [x] Construir contenedores y publicarlos en un Package Registry.
 - [x] Agregar la funcionalidad de eliminar tareas.
-- [ ] Agregar tests al frontend.
+- [x] Agregar tests al frontend.
 - [x] Opcional: agregar una UI de Redis.
 - [ ] Opcional: probar una herramienta de monorepos para ejecutar scripts (alguna alternativa a Turborepo).
 - [x] Opcional: mejorar la UX de la app.
-- [ ] Opcional: probar configurar Railway para que el despliegue sea automático.
+- [x] Opcional: probar configurar Railway para que el despliegue sea automático.
 - [ ] Documentar la arquitectura con un diagrama.
 - [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.
