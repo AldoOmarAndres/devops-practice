@@ -99,11 +99,7 @@ railway add -s frontend \
    -i agustinbravop/devops-practice-frontend:latest
 
 railway add -s redis \
-   -i redis:7-alpine \
-   -v "REDISHOST=redis" \
-   -v "REDISPORT=6379" \
-   -v "REDISUSER=default" \
-   -v "REDISPASSWORD=" \
+   -i redis:7-alpine
 ```
 
 Luego se necesita manualmente habilitar al público el servicio `frontend`.
@@ -137,7 +133,7 @@ Esta lista NO es exhaustiva!
 - [ ] Agregar tests al frontend.
 - [x] Opcional: agregar una UI de Redis.
 - [ ] Opcional: probar una herramienta de monorepos para ejecutar scripts (alguna alternativa a Turborepo).
-- [ ] Opcional: mejorar la UX de la app.
+- [x] Opcional: mejorar la UX de la app.
 - [ ] Opcional: probar configurar Railway para que el despliegue sea automático.
 - [ ] Documentar la arquitectura con un diagrama.
 - [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.

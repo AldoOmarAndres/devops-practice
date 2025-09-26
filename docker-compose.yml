@@ -14,14 +14,14 @@ services:
     ports:
       - "3001:80"
     environment:
-      REDIS_URL: redis://redis:6379
+      REDIS_URL: redis://redis:6380
     depends_on:
       - redis
 
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redisdata:/data
 

@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./App.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001/api";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const result = await axios.get(`${API_URL}/tasks`);
-      setTasks(result.data.tasks);
+      try {
+        setIsLoading(true);
+        const result = await axios.get(`${API_URL}/tasks`);
+        setTasks(result.data.tasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchTasks();
   }, []);
@@ -19,14 +26,26 @@ function App() {
   const handleCreateTask = async (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
-    const res = await axios.post(`${API_URL}/tasks`, { title: newTask });
-    setTasks([...tasks, res.data.task]);
-    setNewTask("");
+
+    try {
+      setIsLoading(true);
+      const res = await axios.post(`${API_URL}/tasks`, { title: newTask });
+      setTasks([...tasks, res.data.task]);
+      setNewTask("");
+    } catch (error) {
+      console.error("Error creating task:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleStatusChange = async (id, status) => {
-    const res = await axios.put(`${API_URL}/tasks/${id}`, { status });
-    setTasks(tasks.map((task) => (task.id === id ? res.data.task : task)));
+    try {
+      const res = await axios.put(`${API_URL}/tasks/${id}`, { status });
+      setTasks(tasks.map((task) => (task.id === id ? res.data.task : task)));
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
   };
 
   const handleDeleteTask = async (id) => {
@@ -38,43 +57,117 @@ function App() {
     }
   };
 
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "completada":
+        return "✅";
+      default:
+        return "⏳";
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "completada":
+        return <span className="task-badge badge-completed">✅ Completed</span>;
+      default:
+        return <span className="task-badge badge-pending">⏳ Pending</span>;
+    }
+  };
+
+  const completedTasks = tasks.filter(
+    (task) => task.status === "completada",
+  ).length;
+  const totalTasks = tasks.length;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>ToDo App</h1>
-        <form onSubmit={handleCreateTask}>
+    <div className="app">
+      {/* Header */}
+      <div className="header">
+        <h1 className="title">Task Manager</h1>
+      </div>
+
+      {/* Add Task Form */}
+      <div className="form-container">
+        <form onSubmit={handleCreateTask} className="form">
           <input
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            placeholder="New task..."
+            placeholder="What needs to be done?"
+            className="input"
+            disabled={isLoading}
           />
-          <button type="submit">Add new task</button>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={!newTask.trim() || isLoading}
+          >
+            {isLoading ? "Adding..." : "Add Task"}
+          </button>
         </form>
-        <div className="task-container">
-          {tasks.map((task) => (
-            <div key={task.id} className={`task-card ${task.status}`}>
-              <p>{task.title}</p>
-              <div className="task-controls">
-                <select
-                  value={task.status}
-                  onChange={(e) => handleStatusChange(task.id, e.target.value)}
-                >
-                  <option value="pendiente">Pending</option>
-                  <option value="completada">Completed</option>
-                </select>
-                <button
-                  className="delete-button"
-                  onClick={() => handleDeleteTask(task.id)}
-                  title="Delete task"
-                >
-                  🗑️
-                </button>
+      </div>
+
+      {/* Tasks List */}
+      <div className="task-list">
+        {isLoading && tasks.length === 0 ? (
+          <div className="loading">
+            <div className="loading-text">Loading tasks...</div>
+          </div>
+        ) : tasks.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📝</div>
+            <h3 className="empty-title">No tasks yet</h3>
+            <p className="empty-description">
+              Add your first task to get started!
+            </p>
+          </div>
+        ) : (
+          tasks.map((task) => (
+            <div
+              key={task.id}
+              className={`task-card ${task.status === "completada" ? "completed" : ""}`}
+            >
+              <div className="task-content">
+                <label className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    checked={task.status === "completada"}
+                    onChange={(e) =>
+                      handleStatusChange(
+                        task.id,
+                        e.target.checked ? "completada" : "pendiente",
+                      )
+                    }
+                    className="checkbox-input"
+                  />
+                  <span className="checkbox-custom"></span>
+                </label>
+
+                <div className="task-info">
+                  <div className="task-title-row">
+                    <h3
+                      className={`task-title ${task.status === "completada" ? "completed" : ""}`}
+                    >
+                      {task.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="task-controls">
+                  <button
+                    className="btn btn-danger delete-btn"
+                    onClick={() => handleDeleteTask(task.id)}
+                    title="Delete task"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </header>
+          ))
+        )}
+      </div>
     </div>
   );
 }
