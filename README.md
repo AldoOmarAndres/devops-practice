@@ -167,10 +167,10 @@ graph LR
     RB -.->|pull latest| PUSH
 
     %% Styling
-    classDef dockerhub fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef cicd fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef production fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
-    classDef development fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef dockerhub fill:#0ea5e9,stroke:#0284c7,stroke-width:2px,color:#ffffff
+    classDef cicd fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#ffffff
+    classDef production fill:#10b981,stroke:#059669,stroke-width:2px,color:#ffffff
+    classDef development fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#ffffff
 
     class DEV,GIT development
     class GA,BUILD,REDEPLOY cicd
