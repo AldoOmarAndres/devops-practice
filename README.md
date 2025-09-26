@@ -16,6 +16,21 @@ Construimos una simple _todo application_ con los siguientes componentes:
 - Una base de datos Redis.
 
 La aplicación permite ver la lista de tareas, crear tareas nuevas y actualizar o eliminar tareas existentes.
+Su arquitectura de software es la siguiente:
+
+```mermaid
+graph LR
+    User(("Usuario")) --> Frontend["Frontend<br/>(React + Vite)"]
+    Frontend --> Backend["Backend<br/>(TypeScript + Express.js)"]
+    Backend --> Redis["Base de datos<br/>(Redis)"]
+```
+
+Flujo de datos:
+
+1. El usuario interactúa con la UI (frontend).
+2. React envía peticiones a la API REST (backend).
+3. El backend procesa las peticiones y envía peticiones a Redis.
+4. Redis responde las peticiones del backend, quien luego responde al frontend.
 
 ## 📂 Estructura del Proyecto
 
@@ -24,13 +39,10 @@ devops-practice
 ├── .github          # Definición de la GitHub Action
 ├── backend          # Servidor backend con TypeScript y Express.js
 │   ├── package.json
-│   ├── tsconfig.json
 │   └── Dockerfile
 ├── frontend         # App web frontend con React y Vite
 │   ├── src
 │   │   └── index.jsx
-│   ├── index.html
-│   ├── vite.config.js
 │   ├── package.json
 │   └── Dockerfile
 ├── docker-compose.yml
@@ -39,7 +51,7 @@ devops-practice
 
 ## 🧑‍💻 Desarrollo
 
-Requerimientos para levantar el proyecto:
+Requisitos para levantar el proyecto:
 
 - Docker.
 
@@ -93,6 +105,7 @@ railway add -s backend \
 Es necesario ir manualmente al servicio `backend` y generar una URL para habilitarlo al público.
 Esa URL `https://backend-production-ced8.up.railway.app` luego se pone en el paso `build-frontend` de la GitHub Action como el argumento `VITE_API_URL` agregando un `/api` al final.
 Esto es necesario porque Vite compila la aplicación al momento de construir la imagen y no procesa variables de entorno en tiempo de ejecución.
+Existen workarounds para esto pero en este caso se prefirió mantener una solución simple.
 
 ```bash
 railway add -s frontend \
@@ -102,24 +115,67 @@ railway add -s redis \
    -i redis:7-alpine
 ```
 
-Luego se necesita manualmente habilitar al público el servicio `frontend`.
-En `redis` es necesario habilitar un TCP Proxy con el puerto `6379`.
-
+Luego se necesita manualmente habilitar al público los servicios `frontend` y `backend`.
 También es necesario en ambos servicios habilitar los redespliegues automáticos cuando se actualiza la imagen con etiqueta `latest`.
 Esto no resultó simple de automatizar, demostrando un inconveniente de Railway: prioriza la experiencia de la GUI por sobre la CLI.
 
 Se tiene una GitHub Action para el despliegue.
-Pasos:
-
-1. GitHub Actions ejecuta todos los pasos de integración continua.
-2. GitHub Actions construye las imagenes de contenedores y las publica en Docker Hub.
-3. GitHub Actions notifica a Railway para redesplegar los servicios, lo cual descarga la imagen nueva de Docker Hub.
-
 Esta GitHub Action requiere las siguientes variables y secrets:
 
 ```
 DOCKERHUB_USERNAME=
 DOCKERHUB_TOKEN=
+RAILWAY_TOKEN=
+```
+
+Pasos de un despliegue al hacer un `git push`:
+
+1. GitHub Actions ejecuta todos los pasos de integración continua.
+2. GitHub Actions construye las imágenes de contenedores y las publica en Docker Hub.
+3. GitHub Actions notifica a Railway para redesplegar los servicios, lo cual descarga la imagen nueva de Docker Hub.
+
+```mermaid
+graph LR
+    subgraph "Desarrollo"
+        DEV[Dev]
+        GIT[Repositorio<br/>GitHub]
+    end
+
+    subgraph "Pipeline CI/CD"
+        GA[Integración<br/>continua]
+        BUILD[Construir imagenes<br/> y pushear a<br/>Docker Hub]
+        REDEPLOY[Redeploy]
+    end
+
+    PUSH[Docker Hub]
+
+    subgraph "Producción en Railway"
+            RF[Frontend]
+            RB[Backend]
+            RR[Redis]
+    end
+
+    %% Deployment flow
+    DEV -->|git push| GIT
+    GIT --> GA
+    GA -->|build| BUILD
+    BUILD -->|push| PUSH
+    BUILD --> REDEPLOY
+    REDEPLOY -->|redeploy| RF
+    REDEPLOY -->|redeploy| RB
+    RF -.->|pull latest| PUSH
+    RB -.->|pull latest| PUSH
+
+    %% Styling
+    classDef dockerhub fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef cicd fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef production fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef development fill:#fff3e0,stroke:#e65100,stroke-width:2px
+
+    class DEV,GIT development
+    class GA,BUILD,REDEPLOY cicd
+    class RF,RB,RR production
+    class PUSH dockerhub
 ```
 
 ## ⚒️ Tareas Pendientes
@@ -132,8 +188,9 @@ Esta lista NO es exhaustiva!
 - [x] Agregar la funcionalidad de eliminar tareas.
 - [x] Agregar tests al frontend.
 - [x] Opcional: agregar una UI de Redis.
-- [ ] Opcional: probar una herramienta de monorepos para ejecutar scripts (alguna alternativa a Turborepo).
 - [x] Opcional: mejorar la UX de la app.
 - [x] Opcional: probar configurar Railway para que el despliegue sea automático.
-- [ ] Documentar la arquitectura con un diagrama.
+- [x] Documentar la arquitectura con un diagrama.
+- [ ] Opcional: probar una herramienta de monorepos para ejecutar scripts (alguna alternativa a Turborepo).
+- [ ] Opcional: desplegar un Redis Insight en lugar de usar la UI integrada en Railway.
 - [ ] Preparar un informe o presentación que resuma resultados obtenidos, dificultades encontradas, y oportunidades de mejora.
