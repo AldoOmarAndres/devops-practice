@@ -113,7 +113,7 @@ Pasos:
 
 1. GitHub Actions ejecuta todos los pasos de integración continua.
 2. GitHub Actions construye las imagenes de contenedores y las publica en Docker Hub.
-3. Railway detecta una nueva imagen con la etiqueta `latest` en Docker Hub y redespliega los servicios.
+3. GitHub Actions notifica a Railway para redesplegar los servicios, lo cual descarga la imagen nueva de Docker Hub.
 
 Esta GitHub Action requiere las siguientes variables y secrets:
 
