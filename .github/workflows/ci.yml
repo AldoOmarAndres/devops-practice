@@ -20,7 +20,7 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: backend
-        run: cd backend && npm install
+        run: npm install
 
       - name: Lint backend
         working-directory: backend
