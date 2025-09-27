@@ -1,7 +1,5 @@
-<div align="center">
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/28058df562244e0db8beceaa1a88d0bf)](https://app.codacy.com/gh/AldoOmarAndres/devops-practice/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![Workflow Badge](https://github.com/AldoOmarAndres/devops-practice/actions/workflows/ci.yml/badge.svg)
-</div>
 
 # 🧩 DevOps: Trabajo Práctico 1
 
